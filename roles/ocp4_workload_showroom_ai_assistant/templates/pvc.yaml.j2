@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ ocp4_workload_showroom_ai_assistant_name }}-llamastack
+  namespace: {{ _showroom_namespace }}
+  labels:
+    app.kubernetes.io/name: {{ ocp4_workload_showroom_ai_assistant_name }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ ocp4_workload_showroom_ai_assistant_llamastack_storage }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ ocp4_workload_showroom_ai_assistant_name }}-hfcache
+  namespace: {{ _showroom_namespace }}
+  labels:
+    app.kubernetes.io/name: {{ ocp4_workload_showroom_ai_assistant_name }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ ocp4_workload_showroom_ai_assistant_hfcache_storage }}

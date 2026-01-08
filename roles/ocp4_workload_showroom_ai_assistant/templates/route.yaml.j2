@@ -1,0 +1,19 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ ocp4_workload_showroom_ai_assistant_name }}
+  namespace: {{ _showroom_namespace }}
+  labels:
+    app.kubernetes.io/name: {{ ocp4_workload_showroom_ai_assistant_name }}
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: {{ ocp4_workload_showroom_ai_assistant_name }}
+    weight: 100
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

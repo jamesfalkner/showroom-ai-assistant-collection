@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ ocp4_workload_showroom_ai_assistant_name }}
+  namespace: {{ _showroom_namespace }}
+  labels:
+    app.kubernetes.io/name: {{ ocp4_workload_showroom_ai_assistant_name }}
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: mcp
+    port: 3000
+    targetPort: 3000
+    protocol: TCP
+  - name: llama
+    port: 8321
+    targetPort: 8321
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: {{ ocp4_workload_showroom_ai_assistant_name }}
