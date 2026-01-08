@@ -10,41 +10,21 @@
   ansible.builtin.set_fact:
     _token_user: "{{ _showroom_user | default(guid) }}"
 
-- name: Read user data ConfigMap
-  kubernetes.core.k8s_info:
-    host: "{{ ocp4_workload_showroom_openshift_api_url | default(omit) }}"
-    api_key: "{{ ocp4_workload_showroom_openshift_api_token | default(omit) }}"
-    validate_certs: false
-    api_version: v1
-    kind: ConfigMap
-    name: showroom-user-data
-    namespace: "{{ _showroom_namespace }}"
-  register: user_data_cm
-  ignore_errors: true
-
-- name: Parse user data YAML from ConfigMap
+- name: Extract VLLM API token from user info
   when:
-    - user_data_cm is succeeded
-    - user_data_cm.resources | length > 0
-    - user_data_cm.resources[0].data['user-data.yaml'] is defined
+    - _showroom_vars is defined
+    - _showroom_vars['litellm_' + _token_user + '_virtual_key'] is defined
   ansible.builtin.set_fact:
-    _parsed_user_data: "{{ user_data_cm.resources[0].data['user-data.yaml'] | from_yaml }}"
+    _vllm_api_token: "{{ _showroom_vars['litellm_' + _token_user + '_virtual_key'] }}"
 
-- name: Extract VLLM API token for user
-  when:
-    - _parsed_user_data is defined
-    - _parsed_user_data['litellm_' + _token_user + '_virtual_key'] is defined
-  ansible.builtin.set_fact:
-    _vllm_api_token: "{{ _parsed_user_data['litellm_' + _token_user + '_virtual_key'] }}"
-
-- name: Use default VLLM API token if not found in ConfigMap
+- name: Use default VLLM API token if not found in user info
   when: _vllm_api_token is not defined
   ansible.builtin.set_fact:
     _vllm_api_token: "{{ ocp4_workload_showroom_ai_assistant_vllm_api_token }}"
 
 - name: Show VLLM token source
   ansible.builtin.debug:
-    msg: "Using VLLM API token for user '{{ _token_user }}': {{ 'extracted from ConfigMap' if _parsed_user_data is defined and _parsed_user_data['litellm_' + _token_user + '_virtual_key'] is defined else 'using default from variables' }}"
+    msg: "Using VLLM API token for user '{{ _token_user }}': {{ 'extracted from user info' if _showroom_vars is defined and _showroom_vars['litellm_' + _token_user + '_virtual_key'] is defined else 'using default from variables' }}"
 
 - name: Deploy Showroom AI Assistant resources
   kubernetes.core.k8s:
