@@ -10,6 +10,10 @@
   ansible.builtin.set_fact:
     _showroom_user_data: "{{ _showroom_user_data | combine(lookup('agnosticd.core.agnosticd_user_data', '*')) }}"
 
+- name: Print Showroom user data
+  ansible.builtin.debug:
+    msg: "Showroom user data: {{ _showroom_user_data }}"
+
 - name: Determine number of users for passthrough
   when:
   - agnosticd_passthrough_user_data is defined

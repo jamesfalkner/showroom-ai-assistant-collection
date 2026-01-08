@@ -52,4 +52,4 @@ ocp4_workload_showroom_ai_assistant_vllm_max_tokens: ""
 ocp4_workload_showroom_ai_assistant_vllm_tls_verify: ""
 
 # Enable passthrough of agnosticd_passthrough_user_data to individual users
-ocp4_workload_showroom_passthrough_user_data: false
+ocp4_workload_showroom_passthrough_user_data: true

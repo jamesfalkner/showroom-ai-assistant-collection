@@ -1,7 +1,7 @@
 ---
 - name: Print Showroom namespace information
   ansible.builtin.debug:
-    msg: "Setting up showroom AI assitant in namespace {{ _showroom_namespace }}"
+    msg: "Setting up showroom AI assistant in namespace {{ _showroom_namespace }}"
 
 - name: Verify Namespace exists
   ansible.builtin.include_tasks: verify_namespace.yaml
