@@ -6,9 +6,6 @@
 ocp4_workload_showroom_ai_assistant_name: "showroom-ai-assistant"
 ocp4_workload_showroom_ai_assistant_namespace: "showroom-{{ guid | default('00000') }}"
 
-# Name variable for label selectors (must match deployment labels)
-ocp4_workload_showroom_name: "{{ ocp4_workload_showroom_ai_assistant_name }}"
-
 # Per-container resource requests and limits
 
 # Backend container
@@ -49,15 +46,10 @@ ocp4_workload_showroom_ai_assistant_lls_image: docker.io/llamastack/distribution
 ocp4_workload_showroom_ai_assistant_mcp_kube_npm_package: kubernetes-mcp-server@latest
 
 # Secret values (API keys and credentials)
-ocp4_workload_showroom_ai_assistant_openai_api_key: "PLACEHOLDER_OPENAI_API_KEY_REPLACE_ME"
-ocp4_workload_showroom_ai_assistant_openai_base_url: ""
 ocp4_workload_showroom_ai_assistant_vllm_api_token: "PLACEHOLDER_VLLM_API_TOKEN_REPLACE_ME"
 ocp4_workload_showroom_ai_assistant_vllm_url: ""
 ocp4_workload_showroom_ai_assistant_vllm_max_tokens: ""
 ocp4_workload_showroom_ai_assistant_vllm_tls_verify: ""
-ocp4_workload_showroom_ai_assistant_ollama_api_key: "PLACEHOLDER_OLLAMA_API_KEY_REPLACE_ME"
-ocp4_workload_showroom_ai_assistant_ollama_url: ""
-ocp4_workload_showroom_ai_assistant_tavily_search_api_key: "TAVILY_API_KEY_REPLACE_ME"
 
 # Enable passthrough of agnosticd_passthrough_user_data to individual users
 ocp4_workload_showroom_passthrough_user_data: false

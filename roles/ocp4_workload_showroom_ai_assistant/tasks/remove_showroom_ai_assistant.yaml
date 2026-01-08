@@ -1,0 +1,27 @@
+---
+- name: Print Showroom namespace information
+  ansible.builtin.debug:
+    msg: "Removing showroom AI assistant from namespace {{ _showroom_namespace }}"
+
+- name: Remove Showroom AI Assistant resources
+  kubernetes.core.k8s:
+    host: "{{ ocp4_workload_showroom_openshift_api_url | default(omit) }}"
+    api_key: "{{ ocp4_workload_showroom_openshift_api_token | default(omit) }}"
+    validate_certs: false
+    state: absent
+    definition: "{{ lookup('template', 'templates/' + item + '.yaml.j2') | from_yaml_all }}"
+  loop:
+    - route
+    - service
+    - deployment
+    - secret
+    - configmap
+    - pvc
+    - rbac
+  loop_control:
+    label: "{{ item }}"
+  ignore_errors: true
+  register: remove_resources
+  retries: 20
+  delay: 3
+  until: remove_resources is not failed
