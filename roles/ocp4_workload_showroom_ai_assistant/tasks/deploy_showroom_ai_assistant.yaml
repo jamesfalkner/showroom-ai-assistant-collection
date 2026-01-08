@@ -134,9 +134,12 @@
     method: POST
     body_format: json
     body:
-      messages:
-        - role: user
-          content: "What is this workshop about?"
+      message: "What is this workshop about?"
+      conversation_history: []
+      agent_type: "auto"
+      include_mcp: false
+      page_context: null
+      previous_response_id: null
     headers:
       Content-Type: application/json
     validate_certs: false
