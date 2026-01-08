@@ -103,6 +103,56 @@
     - r_pod_status.resources[0].status.containerStatuses | selectattr('ready', 'equalto', true) | list | length == r_pod_status.resources[0].status.containerStatuses | length
   ignore_errors: true
 
+- name: Get Route URL for API testing
+  when:
+    - r_pod_status is succeeded
+    - r_pod_status.resources | length > 0
+    - r_pod_status.resources[0].status.phase == 'Running'
+  kubernetes.core.k8s_info:
+    host: "{{ ocp4_workload_showroom_openshift_api_url | default(omit) }}"
+    api_key: "{{ ocp4_workload_showroom_openshift_api_token | default(omit) }}"
+    validate_certs: false
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: "{{ ocp4_workload_showroom_ai_assistant_name }}"
+    namespace: "{{ _showroom_namespace }}"
+  register: r_route_info
+  ignore_errors: true
+
+- name: Set Route URL fact
+  when:
+    - r_route_info is succeeded
+    - r_route_info.resources | length > 0
+    - r_route_info.resources[0].spec.host is defined
+  ansible.builtin.set_fact:
+    _route_url: "https://{{ r_route_info.resources[0].spec.host }}"
+
+- name: Trigger RAG lookup via chat API
+  when: _route_url is defined
+  ansible.builtin.uri:
+    url: "{{ _route_url }}/api/chat/stream"
+    method: POST
+    body_format: json
+    body:
+      messages:
+        - role: user
+          content: "What is this workshop about?"
+    headers:
+      Content-Type: application/json
+    validate_certs: false
+    status_code: [200, 201, 202]
+    timeout: 30
+  register: r_api_test
+  ignore_errors: true
+  retries: 10
+  delay: 5
+  until: r_api_test is not failed
+
+- name: Show API test result
+  when: _route_url is defined
+  ansible.builtin.debug:
+    msg: "API test {{ 'succeeded' if r_api_test is succeeded else 'failed' }} - Route URL: {{ _route_url }}/api/chat/stream"
+
 - name: Get logs from all containers using k8s_log module
   when:
     - _showroom_pod_name is defined
