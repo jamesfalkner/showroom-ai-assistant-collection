@@ -22,9 +22,23 @@
   ansible.builtin.set_fact:
     _vllm_api_token: "{{ ocp4_workload_showroom_ai_assistant_vllm_api_token }}"
 
-- name: Show VLLM token source
+- name: Extract VLLM URL from user info
+  when:
+    - _showroom_vars is defined
+    - _showroom_vars.litellm_api_base_url is defined
+  ansible.builtin.set_fact:
+    _vllm_url: "{{ _showroom_vars.litellm_api_base_url }}"
+
+- name: Use default VLLM URL if not found in user info
+  when: _vllm_url is not defined
+  ansible.builtin.set_fact:
+    _vllm_url: "{{ ocp4_workload_showroom_ai_assistant_vllm_url }}"
+
+- name: Show VLLM configuration source
   ansible.builtin.debug:
-    msg: "Using VLLM API token for user '{{ _token_user }}': {{ 'extracted from user info' if _showroom_vars is defined and _showroom_vars['litellm_' + _token_user + '_virtual_key'] is defined else 'using default from variables' }}"
+    msg:
+      - "VLLM API token for user '{{ _token_user }}': {{ 'extracted from user info' if _showroom_vars is defined and _showroom_vars['litellm_' + _token_user + '_virtual_key'] is defined else 'using default from variables' }}"
+      - "VLLM URL: {{ 'extracted from user info' if _showroom_vars is defined and _showroom_vars.litellm_api_base_url is defined else 'using default from variables' }}"
 
 - name: Deploy Showroom AI Assistant resources
   kubernetes.core.k8s:
