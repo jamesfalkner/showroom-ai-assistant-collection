@@ -12,7 +12,7 @@ ocp4_workload_showroom_ai_assistant_namespace: "showroom-ai-assistant"
 ocp4_workload_showroom_ai_assistant_backend_requests_cpu: 250m
 ocp4_workload_showroom_ai_assistant_backend_requests_memory: 256Mi
 ocp4_workload_showroom_ai_assistant_backend_limits_cpu: 500m
-ocp4_workload_showroom_ai_assistant_backend_limits_memory: 512mi
+ocp4_workload_showroom_ai_assistant_backend_limits_memory: 512Mi
 
 # MCP server container
 ocp4_workload_showroom_ai_assistant_mcp_server_requests_cpu: 100m
