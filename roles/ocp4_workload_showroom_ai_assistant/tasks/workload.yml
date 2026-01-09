@@ -1,31 +1,18 @@
 ---
-- name: Prepare Variables
+- name: Prepare AI Asistant Variables
   ansible.builtin.include_tasks: prepare_variables.yaml
 
-- name: Deploy showroom (single user)
-  when: not _showroom_user_data.users is defined
+- name: Deploy Showroom AI Assistant (single instance)
   vars:
     _showroom_namespace: "{{ ocp4_workload_showroom_ai_assistant_namespace }}"
-    _showroom_vars: "{{ _showroom_global_data | combine({'guid': guid}) }}"
-  ansible.builtin.include_tasks: deploy_showroom_ai_assistant.yaml
-
-- name: Deploy showroom (multi user)
-  when: _showroom_user_data.users is defined
-  vars:
-    _showroom_user: "{{ _showroom_users_item.key }}"
-    _showroom_namespace: "{{ ocp4_workload_showroom_ai_assistant_namespace }}-{{ _showroom_user }}"
     _showroom_vars: >-
       {{
         _showroom_global_data
         | combine(
-            _showroom_users_item.value,
-            {'guid': guid, 'user': _showroom_user},
+            _showroom_user_data.users.user1 | default({}),
+            {'guid': guid},
             recursive=True
           )
       }}
   ansible.builtin.include_tasks: deploy_showroom_ai_assistant.yaml
-  loop: "{{ _showroom_user_data.users | dict2items }}"
-  loop_control:
-    loop_var: _showroom_users_item
-    label: "{{ _showroom_users_item.key }}"
 

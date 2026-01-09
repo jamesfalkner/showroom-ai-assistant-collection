@@ -1,21 +1,33 @@
 ---
-- name: Print Showroom namespace information
+- name: Print Showroom AI Assistant namespace information
   ansible.builtin.debug:
-    msg: "Setting up showroom AI assistant in namespace {{ _showroom_namespace }}"
+    msg: "Setting up Showroom AI Assistant in namespace {{ _showroom_namespace }}"
 
-- name: Verify Namespace exists
+- name: Create Showroom AI Assistant namespace if it doesn't exist
+  kubernetes.core.k8s:
+    host: "{{ ocp4_workload_showroom_openshift_api_url | default(omit) }}"
+    api_key: "{{ ocp4_workload_showroom_openshift_api_token | default(omit) }}"
+    validate_certs: false
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: "{{ _showroom_namespace }}"
+  register: create_namespace
+  retries: 20
+  delay: 3
+  until: create_namespace is not failed
+
+- name: Verify Showroom AI Assistant Namespace exists
   ansible.builtin.include_tasks: verify_namespace.yaml
 
-- name: Determine user identifier for token lookup
-  ansible.builtin.set_fact:
-    _token_user: "{{ _showroom_user | default(guid) }}"
-
-- name: Extract VLLM API token from user info
+- name: Extract VLLM API token from user info (user1)
   when:
     - _showroom_vars is defined
-    - _showroom_vars['litellm_' + _token_user + '_virtual_key'] is defined
+    - _showroom_vars.litellm_user1_virtual_key is defined
   ansible.builtin.set_fact:
-    _vllm_api_token: "{{ _showroom_vars['litellm_' + _token_user + '_virtual_key'] }}"
+    _vllm_api_token: "{{ _showroom_vars.litellm_user1_virtual_key }}"
 
 - name: Use default VLLM API token if not found in user info
   when: _vllm_api_token is not defined
@@ -37,7 +49,7 @@
 - name: Show VLLM configuration source
   ansible.builtin.debug:
     msg:
-      - "VLLM API token for user '{{ _token_user }}': {{ 'extracted from user info' if _showroom_vars is defined and _showroom_vars['litellm_' + _token_user + '_virtual_key'] is defined else 'using default from variables' }}"
+      - "VLLM API token for user1: {{ 'extracted from user info' if _showroom_vars is defined and _showroom_vars.litellm_user1_virtual_key is defined else 'using default from variables' }}"
       - "VLLM URL: {{ 'extracted from user info' if _showroom_vars is defined and _showroom_vars.litellm_api_base_url is defined else 'using default from variables' }}"
 
 - name: Deploy Showroom AI Assistant resources
@@ -62,7 +74,7 @@
   delay: 3
   until: deploy_resources is not failed
 
-- name: Wait for showroom pod to be created using label selector
+- name: Wait for Showroom AI Assistant pod to be created using label selector
   kubernetes.core.k8s_info:
     host: "{{ ocp4_workload_showroom_openshift_api_url | default(omit) }}"
     api_key: "{{ ocp4_workload_showroom_openshift_api_token | default(omit) }}"
@@ -83,7 +95,7 @@
   ansible.builtin.set_fact:
     _showroom_pod_name: "{{ r_showroom_pod.resources[0].metadata.name }}"
 
-- name: Check if showroom pod is running and ready
+- name: Check if Showroom AI Assistant pod is running and ready
   when: _showroom_pod_name is defined
   kubernetes.core.k8s_info:
     host: "{{ ocp4_workload_showroom_openshift_api_url | default(omit) }}"
@@ -103,7 +115,7 @@
     - r_pod_status.resources[0].status.containerStatuses | selectattr('ready', 'equalto', true) | list | length == r_pod_status.resources[0].status.containerStatuses | length
   ignore_errors: true
 
-- name: Get Route URL for API testing
+- name: Get Showroom AI Assistant Route URL for API testing
   when:
     - r_pod_status is succeeded
     - r_pod_status.resources | length > 0
@@ -119,7 +131,7 @@
   register: r_route_info
   ignore_errors: true
 
-- name: Set Route URL fact
+- name: Set Showroom AI Assistant Route URL fact
   when:
     - r_route_info is succeeded
     - r_route_info.resources | length > 0
@@ -127,7 +139,7 @@
   ansible.builtin.set_fact:
     _route_url: "https://{{ r_route_info.resources[0].spec.host }}"
 
-- name: Trigger RAG lookup via chat API
+- name: Trigger Showroom AI Assistant RAG lookup via chat API
   when: _route_url is defined
   ansible.builtin.uri:
     url: "{{ _route_url }}/api/chat/stream"
@@ -151,12 +163,12 @@
   delay: 5
   until: r_api_test is not failed
 
-- name: Show API test result
+- name: Show Showroom AI Assistant API test result
   when: _route_url is defined
   ansible.builtin.debug:
     msg: "API test {{ 'succeeded' if r_api_test is succeeded else 'failed' }} - Route URL: {{ _route_url }}/api/chat/stream"
 
-- name: Get logs from all containers using k8s_log module
+- name: Get logs from all Showroom AI Assistant containers using k8s_log module
   when:
     - _showroom_pod_name is defined
     - r_pod_status.resources | length == 0 or r_pod_status.resources[0].status.phase != 'Running' or r_pod_status.resources[0].status.containerStatuses is not defined or (r_pod_status.resources[0].status.containerStatuses | selectattr('ready', 'equalto', true) | list | length != r_pod_status.resources[0].status.containerStatuses | length)
@@ -175,7 +187,7 @@
   delay: 3
   until: r_pod_logs is not failed
 
-- name: Get logs from init containers
+- name: Get logs from Showroom AI Assistant init containers
   when:
     - _showroom_pod_name is defined
     - r_pod_status.resources | length > 0
@@ -197,7 +209,7 @@
   loop_control:
     label: "{{ item.name }}"
 
-- name: Get full pod information for describe output
+- name: Get full Showroom AI Assistant pod information for describe output
   when:
     - _showroom_pod_name is defined
     - r_pod_status.resources | length == 0 or r_pod_status.resources[0].status.phase != 'Running' or r_pod_status.resources[0].status.containerStatuses is not defined or (r_pod_status.resources[0].status.containerStatuses | selectattr('ready', 'equalto', true) | list | length != r_pod_status.resources[0].status.containerStatuses | length)
@@ -216,14 +228,14 @@
   delay: 3
   until: r_pod_full_info is not failed
 
-- name: Report pod failure with describe and logs
+- name: Report Showroom AI Assistant pod failure with describe and logs
   when:
     - _showroom_pod_name is defined
     - r_pod_status.resources | length == 0 or r_pod_status.resources[0].status.phase != 'Running' or r_pod_status.resources[0].status.containerStatuses is not defined or (r_pod_status.resources[0].status.containerStatuses | selectattr('ready', 'equalto', true) | list | length != r_pod_status.resources[0].status.containerStatuses | length)
   ansible.builtin.fail:
     msg: |
       ========================================================================
-      Showroom pod '{{ _showroom_pod_name }}' failed to start successfully
+      Showroom AI Assistant pod '{{ _showroom_pod_name }}' failed to start successfully
       ========================================================================
 
       POD STATUS SUMMARY:

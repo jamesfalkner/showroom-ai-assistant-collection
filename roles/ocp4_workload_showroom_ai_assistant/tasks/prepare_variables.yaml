@@ -6,13 +6,13 @@
     quiet: true
     fail_msg: Required variables (guid) not defined
 
-- name: Set showroom_user_data fact from lookup - global value (before passthrough)
+- name: Set Showroom AI Assistant user_data fact from lookup - global value (before passthrough)
   ansible.builtin.set_fact:
     _showroom_user_data: "{{ _showroom_user_data | combine(lookup('agnosticd.core.agnosticd_user_data', '*')) }}"
 
-- name: Print Showroom user data
+- name: Print Showroom AI Assistant user data
   ansible.builtin.debug:
-    msg: "Showroom user data: {{ _showroom_user_data }}"
+    msg: "Showroom AI Assistant user data: {{ _showroom_user_data }}"
 
 - name: Determine number of users for passthrough
   when:
@@ -33,7 +33,7 @@
   loop_control:
     loop_var: n
 
-- name: Set showroom_user_data fact from lookup - global value (after passthrough)
+- name: Set Showroom AI Assistant user_data fact from lookup - global value (after passthrough)
   ansible.builtin.set_fact:
     _showroom_user_data: "{{ _showroom_user_data | combine(lookup('agnosticd.core.agnosticd_user_data', '*')) }}"
 

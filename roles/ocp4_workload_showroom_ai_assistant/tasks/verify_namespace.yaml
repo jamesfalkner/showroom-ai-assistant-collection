@@ -1,7 +1,7 @@
 ---
 # Verify the namespace exists before proceeding
 
-- name: Verify Showroom namespace exists
+- name: Verify Showroom AI Assistant namespace exists
   kubernetes.core.k8s_info:
     host: "{{ ocp4_workload_showroom_openshift_api_url | default(omit) }}"
     api_key: "{{ ocp4_workload_showroom_openshift_api_token | default(omit) }}"
@@ -11,7 +11,7 @@
     name: "{{ _showroom_namespace }}"
   register: r_showroom_namespace
 
-- name: Fail if Showroom namespace does not exist
+- name: Fail if Showroom AI Assistant namespace does not exist
   ansible.builtin.fail:
     msg: "Namespace '{{ _showroom_namespace }}' does not exist. Please ensure the namespace is created before running this workload."
   when: r_showroom_namespace.resources | length == 0

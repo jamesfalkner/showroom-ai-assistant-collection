@@ -1,7 +1,7 @@
 ---
-- name: Print Showroom namespace information
+- name: Print Showroom AI Assistant namespace information
   ansible.builtin.debug:
-    msg: "Removing showroom AI assistant from namespace {{ _showroom_namespace }}"
+    msg: "Removing Showroom AI Assistant from namespace {{ _showroom_namespace }}"
 
 - name: Remove Showroom AI Assistant resources
   kubernetes.core.k8s:

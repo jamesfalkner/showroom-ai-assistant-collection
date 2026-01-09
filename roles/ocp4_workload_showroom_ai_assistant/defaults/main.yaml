@@ -4,15 +4,15 @@
 # ocp4_workload_showroom_openshift_api_url: "{{ sandbox_openshift_api_url}}"
 
 ocp4_workload_showroom_ai_assistant_name: "showroom-ai-assistant"
-ocp4_workload_showroom_ai_assistant_namespace: "showroom-{{ guid | default('00000') }}"
+ocp4_workload_showroom_ai_assistant_namespace: "showroom-ai-assistant"
 
 # Per-container resource requests and limits
 
 # Backend container
 ocp4_workload_showroom_ai_assistant_backend_requests_cpu: 250m
-ocp4_workload_showroom_ai_assistant_backend_requests_memory: 512Mi
-ocp4_workload_showroom_ai_assistant_backend_limits_cpu: 1000m
-ocp4_workload_showroom_ai_assistant_backend_limits_memory: 1Gi
+ocp4_workload_showroom_ai_assistant_backend_requests_memory: 256Mi
+ocp4_workload_showroom_ai_assistant_backend_limits_cpu: 500m
+ocp4_workload_showroom_ai_assistant_backend_limits_memory: 512mi
 
 # MCP server container
 ocp4_workload_showroom_ai_assistant_mcp_server_requests_cpu: 100m
@@ -22,15 +22,15 @@ ocp4_workload_showroom_ai_assistant_mcp_server_limits_memory: 512Mi
 
 # LlamaStack container
 ocp4_workload_showroom_ai_assistant_llamastack_requests_cpu: 500m
-ocp4_workload_showroom_ai_assistant_llamastack_requests_memory: 2Gi
+ocp4_workload_showroom_ai_assistant_llamastack_requests_memory: 500Mi
 ocp4_workload_showroom_ai_assistant_llamastack_limits_cpu: "1"
 ocp4_workload_showroom_ai_assistant_llamastack_limits_memory: 2Gi
 
 # Vector loader init container
 ocp4_workload_showroom_ai_assistant_vector_loader_requests_cpu: 200m
-ocp4_workload_showroom_ai_assistant_vector_loader_requests_memory: 512Mi
+ocp4_workload_showroom_ai_assistant_vector_loader_requests_memory: 256Mi
 ocp4_workload_showroom_ai_assistant_vector_loader_limits_cpu: 500m
-ocp4_workload_showroom_ai_assistant_vector_loader_limits_memory: 1Gi
+ocp4_workload_showroom_ai_assistant_vector_loader_limits_memory: 256Mi
 
 # Storage configuration
 ocp4_workload_showroom_ai_assistant_llamastack_storage: 10Gi
