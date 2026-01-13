@@ -214,6 +214,10 @@ agents:
       - "tutorial"
       - "lab"
       - "module"
+      - "docs"
+      - "techdocs"
+      - "documentation"
+      - "exercise"
 
   openshift_debugging:
     name: "OpenShift Debugging Assistant"
@@ -360,3 +364,10 @@ agents:
       - "route"
       - "openshift"
       - "kubernetes"
+      - "configmap"
+      - "persistentvolumeclaim"
+      - "storage"
+      - "PVC"
+      - "ingress"
+      - "operator"
+      - "LlamaStackDistribution"
