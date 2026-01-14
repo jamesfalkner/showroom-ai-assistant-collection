@@ -200,6 +200,7 @@ agents:
     # MCP toolgroups are prefixed with "mcp::" (e.g., "mcp::kubernetes")
     toolgroups:
       - "rag"
+      - "mcp::kubernetes"  # Give this agent access to Kubernetes tools
       - "builtin::websearch"
 
       # Note: MCP tools disabled for this agent to keep it focused on content
