@@ -142,16 +142,11 @@
 - name: Trigger Showroom AI Assistant RAG lookup via chat API
   when: _route_url is defined
   ansible.builtin.uri:
-    url: "{{ _route_url }}/api/chat/stream"
+    url: "{{ _route_url }}/api/rag/query"
     method: POST
     body_format: json
     body:
-      message: "What is this workshop about?"
-      conversation_history: []
-      agent_type: "auto"
-      include_mcp: false
-      page_context: null
-      previous_response_id: null
+      query: "What is this workshop about?"
     headers:
       Content-Type: application/json
     validate_certs: false
@@ -166,7 +161,7 @@
 - name: Show Showroom AI Assistant API test result
   when: _route_url is defined
   ansible.builtin.debug:
-    msg: "API test {{ 'succeeded' if r_api_test is succeeded else 'failed' }} - Route URL: {{ _route_url }}/api/chat/stream"
+    msg: "API test {{ 'succeeded' if r_api_test is succeeded else 'failed' }} - Route URL: {{ _route_url }}/api/rag/query"
 
 - name: Get logs from all Showroom AI Assistant containers using k8s_log module
   when:
