@@ -9,6 +9,8 @@ workshop:
     - "What is this workshop about?"
     - "What's the difference between LlamaStack Client and LangGraph?"
     - "What Red Hat Products are featured in this workshop?"
+    - "How do I use Langfuse for observability?"
+    - "What is Langflow used for?"
 
 # MCP (Model Context Protocol) Configuration
 # Configuration for remote MCP servers available to the AI assistant
@@ -103,7 +105,7 @@ agents:
 
       Lab Structure
 
-      13 Progressive Modules:
+      15 Progressive Modules:
       1. Introduction → Architecture overview
       2. Llama Stack Deployment → Core infrastructure (CRITICAL - all modules depend on this)
       3. API Exploration → Testing endpoints
@@ -115,8 +117,10 @@ agents:
       9. MCP → Model Context Protocol servers (depends on Module 8)
       10. Native Llama Stack Agents → Tool calling (depends on Module 9)
       11. LangGraph Agents → Advanced workflows (depends on Module 10)
-      12. Langfuse → Observability
-      13. RHOAI Workbench → Development environment
+      12. Langfuse → Traces, Evals, and Feedback (Observability)
+      13. Langflow → Graphical agent builder (drag & drop)
+      14. RHOAI Workbench → Development environment (VS Code in-browser)
+      15. Fast Install → Quick setup guide for rapid deployment
 
       Key Directories
 
@@ -131,7 +135,8 @@ agents:
       - Vector DBs: Milvus, FAISS
       - Backend: Python FastAPI, PostgreSQL, Java microservices
       - Agent Protocol: Model Context Protocol (MCP)
-      - Observability: Langfuse
+      - Agent Frameworks: LangGraph, Langflow (graphical drag & drop)
+      - Observability: Langfuse (traces, evals, feedback)
       - Infrastructure: Red Hat OpenShift AI, Kubernetes
 
       User Interaction Patterns
@@ -222,6 +227,13 @@ agents:
       - "techdocs"
       - "documentation"
       - "exercise"
+      - "langflow"
+      - "langfuse"
+      - "observability"
+      - "traces"
+      - "feedback"
+      - "graphical"
+      - "evals"
 
   openshift_debugging:
     name: "OpenShift Debugging Assistant"
@@ -254,7 +266,7 @@ agents:
 
       Lab Structure
 
-      13 Progressive Modules:
+      15 Progressive Modules:
       1. Introduction → Architecture overview
       2. Llama Stack Deployment → Core infrastructure (CRITICAL - all modules depend on this)
       3. API Exploration → Testing endpoints
@@ -266,8 +278,10 @@ agents:
       9. MCP → Model Context Protocol servers (depends on Module 8)
       10. Native Llama Stack Agents → Tool calling (depends on Module 9)
       11. LangGraph Agents → Advanced workflows (depends on Module 10)
-      12. Langfuse → Observability
-      13. RHOAI Workbench → Development environment
+      12. Langfuse → Traces, Evals, and Feedback (Observability)
+      13. Langflow → Graphical agent builder (drag & drop)
+      14. RHOAI Workbench → Development environment (VS Code in-browser)
+      15. Fast Install → Quick setup guide for rapid deployment
 
       Key Directories
 
@@ -282,7 +296,8 @@ agents:
       - Vector DBs: Milvus, FAISS
       - Backend: Python FastAPI, PostgreSQL, Java microservices
       - Agent Protocol: Model Context Protocol (MCP)
-      - Observability: Langfuse
+      - Agent Frameworks: LangGraph, Langflow (graphical drag & drop)
+      - Observability: Langfuse (traces, evals, feedback)
       - Infrastructure: Red Hat OpenShift AI, Kubernetes
 
       User Interaction Patterns
@@ -376,3 +391,5 @@ agents:
       - "ingress"
       - "operator"
       - "LlamaStackDistribution"
+      - "langflow"
+      - "langfuse"
