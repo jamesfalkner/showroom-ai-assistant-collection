@@ -26,10 +26,10 @@ spec:
         - name: SOURCE_DIR
           value: "/vector-data"
         - name: TARGET_DIR
-          value: "/root/.ogx"
+          value: "/.ogx"
         volumeMounts:
         - name: ogx-data
-          mountPath: /root/.ogx
+          mountPath: /.ogx
         command: ["/bin/bash", "-c", "/copy-vectors.sh"]
         resources:
           requests:
@@ -123,9 +123,9 @@ spec:
             name: {{ ocp4_workload_showroom_ai_assistant_name }}-secrets
         volumeMounts:
         - name: ogx-data
-          mountPath: /root/.ogx
+          mountPath: /.ogx
         - name: hfcache
-          mountPath: /root/.cache
+          mountPath: /.cache
         resources:
           requests:
             memory: "{{ ocp4_workload_showroom_ai_assistant_ogx_requests_memory }}"
