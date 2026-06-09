@@ -35,7 +35,7 @@ llm:
   # Example: ["vllm", "ollama"] enables both vLLM for inference and Ollama for embeddings
   engines: ["vllm"]
 
-  # LlamaStack will use this model for generating responses
+  # OGX will use this model for generating responses
   # The model name should match one of the enabled engines (e.g., "vllm/model-name")
   model: "vllm/qwen3-14b"
 
@@ -43,7 +43,7 @@ llm:
   # Can use a different engine than the main model (e.g., "ollama/nomic-embed-text")
   # embedding_model: "openai/text-embedding-3-small"
 
-  # HTTP timeout in seconds for LlamaStack client requests
+  # HTTP timeout in seconds for OGX client requests
   # Increase this for slower models or when using local vLLM/Ollama
   # Default: 120 seconds
   timeout: 600

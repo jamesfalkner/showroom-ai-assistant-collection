@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ ocp4_workload_showroom_ai_assistant_name }}-llamastack
+  name: {{ ocp4_workload_showroom_ai_assistant_name }}-ogx
   namespace: {{ _showroom_namespace }}
   labels:
     app.kubernetes.io/name: {{ ocp4_workload_showroom_ai_assistant_name }}
@@ -11,7 +11,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: {{ ocp4_workload_showroom_ai_assistant_llamastack_storage }}
+      storage: {{ ocp4_workload_showroom_ai_assistant_ogx_storage }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

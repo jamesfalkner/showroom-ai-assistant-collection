@@ -20,11 +20,11 @@ ocp4_workload_showroom_ai_assistant_mcp_server_requests_memory: 256Mi
 ocp4_workload_showroom_ai_assistant_mcp_server_limits_cpu: 500m
 ocp4_workload_showroom_ai_assistant_mcp_server_limits_memory: 512Mi
 
-# LlamaStack container
-ocp4_workload_showroom_ai_assistant_llamastack_requests_cpu: 500m
-ocp4_workload_showroom_ai_assistant_llamastack_requests_memory: 500Mi
-ocp4_workload_showroom_ai_assistant_llamastack_limits_cpu: "1"
-ocp4_workload_showroom_ai_assistant_llamastack_limits_memory: 2Gi
+# OGX container
+ocp4_workload_showroom_ai_assistant_ogx_requests_cpu: 500m
+ocp4_workload_showroom_ai_assistant_ogx_requests_memory: 500Mi
+ocp4_workload_showroom_ai_assistant_ogx_limits_cpu: "1"
+ocp4_workload_showroom_ai_assistant_ogx_limits_memory: 2Gi
 
 # Vector loader init container
 ocp4_workload_showroom_ai_assistant_vector_loader_requests_cpu: 200m
@@ -33,14 +33,14 @@ ocp4_workload_showroom_ai_assistant_vector_loader_limits_cpu: 500m
 ocp4_workload_showroom_ai_assistant_vector_loader_limits_memory: 256Mi
 
 # Storage configuration
-ocp4_workload_showroom_ai_assistant_llamastack_storage: 10Gi
+ocp4_workload_showroom_ai_assistant_ogx_storage: 10Gi
 ocp4_workload_showroom_ai_assistant_hfcache_storage: 10Gi
 
 # Images for the AI assistant
 ocp4_workload_showroom_ai_assistant_image: quay.io/jfalkner1/showroom-ai-assistant:latest
 ocp4_workload_showroom_ai_assistant_rag_image: quay.io/jfalkner1/showroom-ai-assistant-vectors:latest
 ocp4_workload_showroom_ai_assistant_mcp_kube_image: docker.io/node:20
-ocp4_workload_showroom_ai_assistant_lls_image: docker.io/llamastack/distribution-starter:0.3.2
+ocp4_workload_showroom_ai_assistant_ogx_image: docker.io/ogxai/distribution-starter:1.0.2
 
 
 ocp4_workload_showroom_ai_assistant_mcp_kube_npm_package: kubernetes-mcp-server@latest
