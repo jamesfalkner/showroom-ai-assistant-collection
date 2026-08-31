@@ -40,7 +40,7 @@ ocp4_workload_showroom_ai_assistant_hfcache_storage: 10Gi
 ocp4_workload_showroom_ai_assistant_image: quay.io/jfalkner1/showroom-ai-assistant:latest
 ocp4_workload_showroom_ai_assistant_rag_image: quay.io/jfalkner1/showroom-ai-assistant-vectors:latest
 ocp4_workload_showroom_ai_assistant_mcp_kube_image: docker.io/node:20
-ocp4_workload_showroom_ai_assistant_ogx_image: docker.io/ogxai/distribution-starter:1.0.2
+ocp4_workload_showroom_ai_assistant_ogx_image: docker.io/ogxai/distribution-starter:1.3.0
 
 
 ocp4_workload_showroom_ai_assistant_mcp_kube_npm_package: kubernetes-mcp-server@latest
