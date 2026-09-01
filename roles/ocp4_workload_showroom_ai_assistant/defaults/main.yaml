@@ -24,7 +24,7 @@ ocp4_workload_showroom_ai_assistant_mcp_server_limits_memory: 512Mi
 ocp4_workload_showroom_ai_assistant_ogx_requests_cpu: 500m
 ocp4_workload_showroom_ai_assistant_ogx_requests_memory: 500Mi
 ocp4_workload_showroom_ai_assistant_ogx_limits_cpu: "1"
-ocp4_workload_showroom_ai_assistant_ogx_limits_memory: 2Gi
+ocp4_workload_showroom_ai_assistant_ogx_limits_memory: 4Gi
 
 # Vector loader init container
 ocp4_workload_showroom_ai_assistant_vector_loader_requests_cpu: 200m
